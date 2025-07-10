@@ -1,17 +1,32 @@
-// Available variables which can be used inside of strings.
-// See https://go.microsoft.com/fwlink/?LinkId=733558
-// for the documentation about the tasks.json format
 {
   "version": "2.0.0",
 	"tasks": [
 		{
-      "type": "npm",
-			"script": "watch",
-			"problemMatcher": "$tsc-watch",
+			"label": "pnpm: watch",
+			"type": "shell",
+			"command": "pnpm",
+			"args": [
+				"watch"
+			],
 			"isBackground": true,
-			"presentation": {
-				"reveal": "never"
-			},
+			"problemMatcher": [
+				"$tsc-watch"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		},
+		{
+			"label": "pnpm: compile",
+			"type": "shell",
+			"command": "pnpm",
+			"args": [
+				"compile"
+			],
+			"problemMatcher": [
+				"$tsc"
+			],
 			"group": {
 				"kind": "build",
 				"isDefault": true

@@ -1,8 +1,6 @@
-# pdf
+# VS Code PDF
 
-Display pdf in VSCode.
-
-![screenshot](https://user-images.githubusercontent.com/3643499/84454816-98fcd600-ac96-11ea-822c-3ae1e1599a13.gif)
+View PDF in VS Code.
 
 ## Contribute
 
