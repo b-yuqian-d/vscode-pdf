@@ -96,8 +96,7 @@
     "test": "node ./out/test/runTest.js",
     "lint": "pnpm exec eslint",
     "package": "pnpm exec vsce package --no-dependencies",
-    "package:tree": "pnpm exec vsce ls --tree --no-dependencies",
-    "webview:build": "tsc -p ./webview && vite build ./webview"
+    "package:tree": "pnpm exec vsce ls --tree --no-dependencies"
   },
   "devDependencies": {
     "@eslint/js": "9.30.1",

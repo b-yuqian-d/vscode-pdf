@@ -25,13 +25,7 @@ See https://github.com/adobe-type-tools/cmap-resources
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="google" content="notranslate">
-    <base href="WEBVIEW_RESOURCE_BASE_URL"/>
     <title>PDF.js viewer</title>
-    <script type="module">
-      window.parent = window;
-      window.top = window;
-      window.frameElement = null;
-    </script>
 
 <!-- This snippet is used in production (included from viewer.html) -->
 <link rel="resource" type="application/l10n" href="locale/locale.json">
@@ -43,6 +37,7 @@ See https://github.com/adobe-type-tools/cmap-resources
   </head>
 
   <body tabindex="0">
+    <span id="viewer-alert" class="visuallyHidden" role="alert"></span>
     <div id="outerContainer">
 
       <div id="sidebarContainer">
@@ -663,7 +658,7 @@ See https://github.com/adobe-type-tools/cmap-resources
                   <button id="clearSignatureButton" type="button" data-l10n-id="pdfjs-editor-add-signature-clear-button" tabindex="0"><span data-l10n-id="pdfjs-editor-add-signature-clear-button-label"></span></button>
                 </div>
                 <div id="addSignatureSaveContainer">
-                  <input type="checkbox" id="addSignatureSaveCheckbox" checked="true"></input>
+                  <input type="checkbox" id="addSignatureSaveCheckbox"></input>
                   <label for="addSignatureSaveCheckbox" data-l10n-id="pdfjs-editor-add-signature-save-checkbox"></label>
                   <span></span>
                   <span id="addSignatureSaveWarning" data-l10n-id="pdfjs-editor-add-signature-save-warning-message"></span>
