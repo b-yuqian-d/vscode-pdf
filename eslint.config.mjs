@@ -6,7 +6,7 @@ import { defineConfig } from 'eslint/config';
 
 export default defineConfig([
   {
-    ignores: ['.vscode-test/**/*', 'lib/**/*', 'out/**/*'],
+    ignores: ['.vscode-test/**/*', 'webview/**/*', 'out/**/*'],
   },
   {
     files: ['src/**/*.{js,mjs,cjs,ts,mts,cts}', '*.{js,mjs,cjs,ts,mts,cts}'],

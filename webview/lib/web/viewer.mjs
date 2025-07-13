@@ -654,7 +654,7 @@ const defaultOptions = {
     kind: OptionKind.BROWSER
   },
   supportsPrinting: {
-    value: true,
+    value: false,
     kind: OptionKind.BROWSER
   },
   toolbarDensity: {
@@ -666,7 +666,7 @@ const defaultOptions = {
     kind: OptionKind.VIEWER + OptionKind.PREFERENCE
   },
   annotationEditorMode: {
-    value: 0,
+    value: AnnotationEditorType.DISABLE,
     kind: OptionKind.VIEWER + OptionKind.PREFERENCE
   },
   annotationMode: {
@@ -912,10 +912,6 @@ const defaultOptions = {
   }
 };
 {
-  defaultOptions.defaultUrl = {
-    value: "compressed.tracemonkey-pldi-09.pdf",
-    kind: OptionKind.VIEWER
-  };
   defaultOptions.sandboxBundleSrc = {
     value: "../build/pdf.sandbox.mjs",
     kind: OptionKind.VIEWER
@@ -15201,10 +15197,12 @@ const PDFViewerApplication = {
     const queryString = document.location.search.substring(1);
     const params = parseQueryString(queryString);
     file = params.get("file") ?? AppOptions.get("defaultUrl");
-    try {
-      file = new URL(decodeURIComponent(file)).href;
-    } catch {
-      file = encodeURIComponent(file).replaceAll("%2F", "/");
+    if (file) {
+      try {
+        file = new URL(decodeURIComponent(file)).href;
+      } catch {
+        file = encodeURIComponent(file).replaceAll("%2F", "/");
+      }
     }
     validateFileURL(file);
     const fileInput = this._openFileInput = document.createElement("input");
@@ -17049,19 +17047,6 @@ function getViewerConfiguration() {
 }
 function webViewerLoad() {
   const config = getViewerConfiguration();
-  const event = new CustomEvent("webviewerloaded", {
-    bubbles: true,
-    cancelable: true,
-    detail: {
-      source: window
-    }
-  });
-  try {
-    parent.document.dispatchEvent(event);
-  } catch (ex) {
-    console.error("webviewerloaded:", ex);
-    document.dispatchEvent(event);
-  }
   PDFViewerApplication.run(config);
 }
 document.blockUnblockOnload?.(true);
