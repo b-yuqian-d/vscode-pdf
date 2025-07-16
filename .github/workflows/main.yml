@@ -1,4 +1,5 @@
 name: main.yml
+run-name: "Build package"
 on: push
 jobs:
   build:
