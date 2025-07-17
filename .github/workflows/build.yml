@@ -1,6 +1,10 @@
 name: build
 on:
-  workflow_call
+  workflow_call:
+    inputs:
+      upload-artifact:
+        type: boolean
+        default: false
 jobs:
   build:
     runs-on: ubuntu-22.04
@@ -15,3 +19,10 @@ jobs:
           pnpm install
       - run: |
           pnpm package
+      - uses: actions/upload-artifact@v4
+        if:
+          ${{ inputs.upload-artifact }}
+        with:
+          name: vsix-${{ github.sha }}
+          path: '*.vsix'
+          if-no-files-found: error

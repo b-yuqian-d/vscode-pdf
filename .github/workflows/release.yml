@@ -7,15 +7,9 @@ on:
       - '[0-9]+.[0-9]+.[0-9]+-**'
 jobs:
   build:
-    runs-on: ubuntu-22.04
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/workflows/build.yml
-      - uses: actions/upload-artifact@v4
-        with:
-          name: vscode-extension-package
-          path: '*.vsix'
-          if-no-files-found: error
+    uses: .github/workflows/build.yml
+    with:
+      upload-artifact: true
 
   create-release:
     runs-on: ubuntu-22.04
@@ -24,7 +18,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
         with:
-          name: vscode-extension-package
+          name: vsix-${{ github.sha }}
       - run: |
           RELEASE_VERSION=$(jq --raw-output '.version' package.json)
           curl "${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/releases" \
