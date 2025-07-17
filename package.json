@@ -99,8 +99,8 @@
     "lint": "pnpm exec eslint",
     "compile:production": "pnpm run check-types && node esbuild.mjs --production",
     "vscode:prepublish": "pnpm run compile:production",
-    "package": "pnpm exec vsce package --no-dependencies",
-    "package:tree": "pnpm exec vsce ls --tree --no-dependencies"
+    "package": "pnpm exec vsce package --follow-symlinks",
+    "package:tree": "pnpm exec vsce ls --tree --follow-symlinks"
   },
   "devDependencies": {
     "@eslint/js": "9.30.1",
