@@ -10,10 +10,12 @@ jobs:
   build:
     uses: ./.github/workflows/build.yml
     with:
-      artifact-name: 'vscode-pdf-${{ env.RELEASE_VERSION }}'
+      artifact-name: 'vscode-pdf-${{ github.ref_name }}'
 
   release:
     runs-on: ubuntu-22.04
+    needs:
+      - build
     env:
       RELEASE_MANAGEMENT_TOKEN: ${{ secrets.ACCESS_TOKEN_FOR_RELEASE_MANAGEMENT }}
     steps:
@@ -33,7 +35,8 @@ jobs:
             -H "X-GitHub-Api-Version: 2022-11-28" \
             -o release-info.json \
             "${GITHUB_RELEASE_API}"
-          UPLOAD_URL=$(jq --raw-output '.upload_url' release-info.json )
+          UPLOAD_URL=$(jq --raw-output '.upload_url | sub("{.*}$"; "")' release-info.json )
+          echo "Upload to: ${UPLOAD_URL}"
           curl -L \
             -X POST \
             -H "Accept: application/vnd.github+json" \
