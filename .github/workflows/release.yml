@@ -36,6 +36,7 @@ jobs:
             -o release-info.json \
             "${GITHUB_RELEASE_API}"
           UPLOAD_URL=$(jq --raw-output '.assets_url' release-info.json )
+          echo "Upload to: ${UPLOAD_URL}"
           curl -L \
             -X POST \
             -H "Accept: application/vnd.github+json" \
