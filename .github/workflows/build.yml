@@ -2,20 +2,13 @@ name: build
 on:
   workflow_call:
     inputs:
-      upload-artifact:
-        type: boolean
-        default: false
-    outputs:
-      build-artifact-name:
+      artifact-name:
         description: 'This artifact will contain packaged vscode extension'
-        value: ${{ jobs.build.outputs.artifact-name }}
+        type: string
+        default: ''
 jobs:
   build:
     runs-on: ubuntu-22.04
-    env:
-      ARTIFACT_NAME: ${{ github.sha }}
-    outputs:
-      artifact-name: ${{ steps.output.outputs.artifact-name }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -29,11 +22,8 @@ jobs:
           pnpm package
       - uses: actions/upload-artifact@v4
         if:
-          ${{ inputs.upload-artifact }}
+          ${{ inputs.artifact-name }}
         with:
-          name: ${{ env.ARTIFACT_NAME }}
+          name: ${{ inputs.artifact-name }}
           path: '*.vsix'
           if-no-files-found: error
-      - id: output
-        run: |
-          echo "artifact-name=${ARTIFACT_NAME}" >> "GITHUB_OUTPUT"
