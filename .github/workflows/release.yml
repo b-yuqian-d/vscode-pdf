@@ -10,7 +10,7 @@ jobs:
   build:
     uses: ./.github/workflows/build.yml
     with:
-      artifact-name: 'vscode-pdf-${{ env.RELEASE_VERSION }}'
+      artifact-name: 'vscode-pdf-${{ github.ref_name }}'
 
   release:
     runs-on: ubuntu-22.04
