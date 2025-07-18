@@ -1,0 +1,39 @@
+name: build
+on:
+  workflow_call:
+    inputs:
+      upload-artifact:
+        type: boolean
+        default: false
+    outputs:
+      build-artifact-name:
+        description: 'This artifact will contain packaged vscode extension'
+        value: ${{ jobs.build.outputs.artifact-name }}
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    env:
+      ARTIFACT_NAME: ${{ github.sha }}
+    outputs:
+      artifact-name: ${{ steps.output.outputs.artifact-name }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+      - run: |
+          corepack enable && corepack install
+      - run: |
+          pnpm install
+      - run: |
+          pnpm package
+      - uses: actions/upload-artifact@v4
+        if:
+          ${{ inputs.upload-artifact }}
+        with:
+          name: ${{ env.ARTIFACT_NAME }}
+          path: '*.vsix'
+          if-no-files-found: error
+      - id: output
+        run: |
+          echo "artifact-name=${ARTIFACT_NAME}" >> "GITHUB_OUTPUT"
